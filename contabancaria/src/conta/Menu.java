@@ -5,12 +5,17 @@ import conta.util.Cores;
 public class Menu {
 
 	public static void main(String[] args) {
-		Conta c1 = new Conta(1, 123, 1, "Edipo", 2542.0f);
+		
+
+
+		Conta c1 = new Conta(56464, 4 , 2, "Edipo", 6000);
+
 		c1.visualizar();
 		c1.sacar(12000.0f);
 		c1.visualizar();
 		c1.sacar(1000.f);
 		c1.visualizar();
+		
 		Scanner leia = new Scanner(System.in);
 		int opcao;
 		while (true) {
