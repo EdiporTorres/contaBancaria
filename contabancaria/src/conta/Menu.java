@@ -1,23 +1,32 @@
 package conta;
+
 import conta.model.*;
 import java.util.*;
 import conta.util.Cores;
+
 public class Menu {
 
 	public static void main(String[] args) {
-		
 
 
-		Conta c1 = new Conta(56464, 4 , 2, "Edipo", 6000);
-
-		c1.visualizar();
-		c1.sacar(12000.0f);
-		c1.visualizar();
-		c1.sacar(1000.f);
-		c1.visualizar();
-		
-		Scanner leia = new Scanner(System.in);
 		int opcao;
+
+		// Teste da Classe Conta Corrente
+		ContaCorrente cc1 = new ContaCorrente(1, 123, 1, "José da Silva", 0.0f, 1000.0f);
+		cc1.visualizar();
+		cc1.sacar(12000.0f);
+		cc1.visualizar();
+		cc1.depositar(5000.0f);
+		cc1.visualizar();
+        // Teste da Classe Conta Poupança
+		ContaPoupanca cp1 = new ContaPoupanca(2, 123, 2, "Maria dos Santos", 100000.0f, 15);
+		cp1.visualizar();
+        cp1.sacar(1000.0f);
+		cp1.visualizar();
+		cp1.depositar(5000.0f);
+		cp1.visualizar();
+		Scanner leia = new Scanner(System.in);
+
 		while (true) {
 			System.out.println(Cores.TEXT_YELLOW + Cores.ANSI_BLACK_BACKGROUND);
 			System.out.println("*****************************************************");
@@ -38,7 +47,7 @@ public class Menu {
 			System.out.println("                                                     ");
 			System.out.println("*****************************************************");
 			System.out.println("Entre com a opção desejada:                          ");
-			System.out.println("                                                     "+Cores.TEXT_RESET);
+			System.out.println("                                                     " + Cores.TEXT_RESET);
 			opcao = leia.nextInt();
 
 			if (opcao == 9) {
@@ -49,31 +58,31 @@ public class Menu {
 			}
 			switch (opcao) {
 			case 1:
-				System.out.println(Cores.TEXT_WHITE_BOLD+"Criar conta \n\n");
+				System.out.println(Cores.TEXT_WHITE_BOLD + "Criar conta \n\n");
 				break;
 			case 2:
-				System.out.println(Cores.TEXT_WHITE_BOLD+"LIstar todas as contas \n\n");
+				System.out.println(Cores.TEXT_WHITE_BOLD + "LIstar todas as contas \n\n");
 				break;
 			case 3:
-				System.out.println(Cores.TEXT_WHITE_BOLD+"Buscar conta por Numero\n\n");
+				System.out.println(Cores.TEXT_WHITE_BOLD + "Buscar conta por Numero\n\n");
 				break;
 			case 4:
-				System.out.println(Cores.TEXT_WHITE_BOLD+"Atualizar Dados da conta\n\n");
+				System.out.println(Cores.TEXT_WHITE_BOLD + "Atualizar Dados da conta\n\n");
 				break;
 			case 5:
-				System.out.println(Cores.TEXT_WHITE_BOLD+"Apagar conta\n\n");
+				System.out.println(Cores.TEXT_WHITE_BOLD + "Apagar conta\n\n");
 				break;
 			case 6:
-				System.out.println(Cores.TEXT_WHITE_BOLD+"Apagar conta\n\n");
+				System.out.println(Cores.TEXT_WHITE_BOLD + "Apagar conta\n\n");
 				break;
 			case 7:
-				System.out.println(Cores.TEXT_WHITE_BOLD+"Depositar\n\n");
+				System.out.println(Cores.TEXT_WHITE_BOLD + "Depositar\n\n");
 				break;
 			case 8:
-				System.out.println(Cores.TEXT_WHITE_BOLD+"Transferir valores entre contas\n\n");
+				System.out.println(Cores.TEXT_WHITE_BOLD + "Transferir valores entre contas\n\n");
 				break;
 			default:
-				System.out.println(Cores.TEXT_RED_BOLD+"Opção invalida");
+				System.out.println(Cores.TEXT_RED_BOLD + "Opção invalida");
 				break;
 			}
 		}
