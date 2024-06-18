@@ -4,31 +4,22 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import conta.controller.ContaController;
+import conta.model.Conta;
 import conta.model.ContaCorrente;
 import conta.model.ContaPoupanca;
 import conta.util.Cores;
+
 public class Menu {
 	public static Scanner leia = new Scanner(System.in);
-	
+
 	public static void main(String[] args) {
-		
-		int opcao = 0;
 
-		// Teste da Classe Conta Corrente
-		ContaCorrente cc1 = new ContaCorrente(1, 123, 1, "Adriana", 10000.0f, 1000.0f);
-		cc1.visualizar();
-		cc1.sacar(12000.0f);
-		cc1.visualizar();
-		cc1.depositar(5000.0f);
-		cc1.visualizar();
-
-		// Teste da Classe Conta Poupança
-		ContaPoupanca cp1 = new ContaPoupanca(2, 123, 2, "Victor", 100000.0f, 15);
-		cp1.visualizar();
-		cp1.sacar(1000.0f);
-		cp1.visualizar();
-		cp1.depositar(5000.0f);
-		cp1.visualizar();
+		ContaController conta = new ContaController();
+		int opcao, numero, agencia, tipo, aniversario, NumeroDestino;
+		;
+		String titular;
+		float saldo, limite, valor;
 
 		while (true) {
 			System.out.println(Cores.TEXT_YELLOW + Cores.ANSI_BLACK_BACKGROUND);
@@ -52,7 +43,6 @@ public class Menu {
 			System.out.println("Entre com a opção desejada:                          ");
 			System.out.println("                                                     " + Cores.TEXT_RESET);
 
-
 			try {
 				opcao = leia.nextInt();
 			} catch (InputMismatchException e) {
@@ -69,48 +59,140 @@ public class Menu {
 			}
 			switch (opcao) {
 			case 1:
-				System.out.println("\n Criar Conta");
+				System.out.println(Cores.TEXT_WHITE + "\n Criar Conta");
+
+				System.out.println("Digite o Numero da agência: ");
+				agencia = leia.nextInt();
+				System.out.println("Digite o Nome do Titular: ");
+				leia.skip("\\R?");
+				titular = leia.nextLine();
+
+				do {
+					System.out.println("Digite o Tipo da Conta (1-CC ou 2-CP): ");
+					tipo = leia.nextInt();
+				} while (tipo < 1 && tipo > 2);
+				System.out.println("Digite o Saldo da Conta R$: ");
+				saldo = leia.nextFloat();
+
+				switch (tipo) {
+				case 1 -> {
+					System.out.println("Digite o Limite do Crédito R$: ");
+					limite = leia.nextFloat();
+					conta.cadastrar(new ContaCorrente(conta.gerarNumero(), agencia, tipo, titular, saldo, limite));
+				}
+				case 2 -> {
+					System.out.println("Digite o Aniversario da conta: ");
+					aniversario = leia.nextInt();
+					conta.cadastrar(new ContaPoupanca(conta.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
+
+				}
+				}
 
 				keyPress();
 				break;
 			case 2:
-				System.out.println("\n Listar todas as Contas");
-
+				System.out.println(Cores.TEXT_WHITE + "\n Listar todas as Contas");
+				conta.listarTodas();
 				keyPress();
 				break;
 			case 3:
-				System.out.println("\n Buscar Conta por número");
+				System.out.println(Cores.TEXT_WHITE + "\n Buscar Conta por número");
+				System.out.println("Digite o numero da conta: ");
+				numero = leia.nextInt();
 
+				conta.procurarPorNumero(numero);
 				keyPress();
 				break;
 			case 4:
-				System.out.println("\n Atualizar dados da Conta");
+				System.out.println(Cores.TEXT_WHITE + "\n Atualizar dados da Conta");
 
-				keyPress();
-				break;
+				System.out.println("Digite o numero da COnta: ");
+				numero = leia.nextInt();
+
+				var buscaConta = conta.buscarNaColletion(numero);
+
+				if (buscaConta != null) {
+					tipo = buscaConta.getTipo();
+
+					System.out.println("Digite o numero da Agência: ");
+					agencia = leia.nextInt();
+					System.out.println("DIgite o nome do Titular ");
+					leia.skip("\\R?");
+					titular = leia.nextLine();
+
+					System.out.println("Digite o Saldo da conta: ");
+					saldo = leia.nextFloat();
+					switch (tipo) {
+					case 1 -> {
+						System.out.println("Digite o Limite do Crédito R$: ");
+						limite = leia.nextFloat();
+						conta.atualizar(new ContaCorrente(conta.gerarNumero(), agencia, tipo, titular, saldo, limite));
+					}
+					case 2 -> {
+						System.out.println("Digite o Aniversario da conta: ");
+						aniversario = leia.nextInt();
+						conta.atualizar(
+								new ContaPoupanca(conta.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
+					}
+					default -> {
+						System.out.println("Tipo de conta invalido!");
+					}
+					}
+					}else {
+						System.out.println("Conta não  foi encontrada!");
+					keyPress();
+					break;
+				}
 			case 5:
-				System.out.println("\n Apagar Conta");
-
+				System.out.println(Cores.TEXT_WHITE + "\n Apagar Conta");
+				System.out.println("Digite o numero da conta: ");
+				numero = leia.nextInt();
+				conta.deletar(numero);
 				keyPress();
 				break;
 			case 6:
-				System.out.println("\n Sacar");
-
+				System.out.println(Cores.TEXT_WHITE + "\n Sacar");
+				
+				System.out.println("Digite o Numero da conta: ");
+				numero = leia.nextInt();
+				
+				do {
+					System.out.println("Digite o valor do Saque R$: ");
+					valor = leia.nextFloat();
+				}while(valor <=0);
+				conta.sacar(numero,valor);
 				keyPress();
 				break;
 			case 7:
-				System.out.println("\n Depositar");
-
+				System.out.println(Cores.TEXT_WHITE + "\n Depositar");
+				System.out.println("Digite o numero da conta: ");
+				numero = leia.nextInt();
+				
+				do {
+					System.out.println("Digite o valor do deposito R$: ");
+					valor = leia.nextFloat();
+				}while(valor <= 0);
+				conta.depositar(numero,valor);
 				keyPress();
 				break;
 			case 8:
-				System.out.println("\n Transferir");
-
+				System.out.println(Cores.TEXT_WHITE + "\n Transferir");
+				System.out.println("Digite o Numero da conta de Origem: ");
+				numero =leia.nextInt();
+				System.out.println("Digite o numero da Conta Destino: ");
+				NumeroDestino = leia.nextInt();
+				
+				do {
+					System.out.println("Digite o valor da transferencia R$: ");
+					valor = leia.nextFloat();
+				}while (valor <=0);
+				
+				conta.transferir(numero,NumeroDestino,valor);
 				keyPress();
 				break;
 			default:
-				System.out.println("\nOpção Inválida" + Cores.TEXT_RESET);
-				
+				System.out.println(Cores.TEXT_WHITE + "\nOpção Inválida" + Cores.TEXT_RESET);
+
 				keyPress();
 				break;
 			}
