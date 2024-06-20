@@ -16,7 +16,7 @@ public class Menu {
 	public static void main(String[] args) {
 
 		ContaController conta = new ContaController();
-		int opcao, numero, agencia, tipo, aniversario, NumeroDestino;
+		int opcao, numero, agencia, tipo, aniversario, numeroDestino;
 		;
 		String titular;
 		float saldo, limite, valor;
@@ -180,14 +180,14 @@ public class Menu {
 				System.out.println("Digite o Numero da conta de Origem: ");
 				numero =leia.nextInt();
 				System.out.println("Digite o numero da Conta Destino: ");
-				NumeroDestino = leia.nextInt();
+				numeroDestino = leia.nextInt();
 				
 				do {
 					System.out.println("Digite o valor da transferencia R$: ");
 					valor = leia.nextFloat();
 				}while (valor <=0);
 				
-				conta.transferir(numero,NumeroDestino,valor);
+				conta.transferir(numero,numeroDestino,valor);
 				keyPress();
 				break;
 			default:
