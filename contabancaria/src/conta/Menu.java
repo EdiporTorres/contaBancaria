@@ -37,10 +37,10 @@ public class Menu {
 			System.out.println("            6 - Sacar                                ");
 			System.out.println("            7 - Depositar                            ");
 			System.out.println("            8 - Transferir valores entre Contas      ");
-			System.out.println("            9 - Sair                                 ");
+			System.out.println("            9 - Sair                                ");
 			System.out.println("                                                     ");
 			System.out.println("*****************************************************");
-			System.out.println("Entre com a opção desejada:                          ");
+			System.out.println("Entre co desejada:                          ");
 			System.out.println("                                                     " + Cores.TEXT_RESET);
 
 			try {
@@ -191,7 +191,7 @@ public class Menu {
 				keyPress();
 				break;
 			default:
-				System.out.println(Cores.TEXT_WHITE + "\nOpção Inválida" + Cores.TEXT_RESET);
+				System.out.println(Cores.TEXT_WHITE + "\nOpo Inválida" + Cores.TEXT_RESET);
 
 				keyPress();
 				break;
